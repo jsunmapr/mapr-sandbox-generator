@@ -39,9 +39,9 @@ wget http://package.mapr.com/releases/v3.1.1/sandbox/ova/MapR-Sandbox-For-Hadoop
 ```
 
 ###Step 6 - Customize install metadata
-All of the information around how your VM gets created is in the partner-sandbox.json file.  The file is slightly self-explanatory, and for most installations you don't need to change much.  The only things you may need to change are in the "provisioners" section.  Here, you can add or remove files from getting copied into the new VM, or reference any new scripts you want to get run.  By default, it will try to pull /files/start_MyAppName.sh and /files/MyAppName.rpm into the VM, and run script/MyAppName.sh during setup.
+All of the information around how your VM gets created is in the partner-sandbox.json file.  The file is slightly self-explanatory, and for most installations you don't need to change much.  The only things you may need to change are in the "provisioners" section.  Here, you can add or remove files from getting copied into the new VM, or reference any new scripts you want to get run.  By default, it will try to pull /files/* and /files/partner.rpm into the VM, and run script/* during setup.
 
 ###Step 7 - Create the VM
 ```
-packer build --var 'mapr_version=3.1.1' --var 'partner_name=MyAppName' --var 'partner_version=7.0.1' partner-sandbox.json
+packer build -var 'mapr_version=3.1.1' -var 'partner_name=MyAppName' -var 'partner_version=7.0.1' partner-sandbox.json
 ```
