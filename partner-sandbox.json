@@ -1,15 +1,15 @@
 {
 	"variables":{
-		"mapr_version":"3.1.1",
-		"partner_name":"partner",
-		"partner_version":"7.0.1"
+		"mapr_version":"",
+		"partner_name":"",
+		"partner_version":""
 	},
 	"builders":[
 		{
-			"name":"partner",
+			"name":"Platfora",
 			"vm_name":"MapR-{{ user `partner_name` }}-{{ user `mapr_version` }}-{{ user `partner_version`}}",
 			"type":"virtualbox-ovf",
-			"source_path":"output-virtualbox-ovf/MapR-Sandbox-For-Hadoop-{{ user `mapr_version` }}_VB.ova",
+			"source_path":"input-virtualbox-ovf/MapR-Sandbox-For-Hadoop-{{ user `mapr_version` }}.ova",
 			"ssh_username":"root",
 			"ssh_password":"mapr",
 			"ssh_wait_timeout":"300s",
@@ -21,28 +21,24 @@
 	"provisioners":[
 		{
 			"type":"file",
-			"source":"files/start_{{ user `partner_name` }}.sh",
-			"destination":"/opt/mapr/start_{{ user `partner_name` }}.sh",
-			"only":[
-				"partner"
-			]
+			"source":"files/welcome.py",
+			"destination":"/opt/startup/welcome.py"
 		},
 		{
 			"type":"file",
-			"source":"files/{{ user `partner_name` }}.rpm",
-			"destination":"/tmp/{{ user `partner_name` }}.rpm",
-			"only":[
-				"partner"
-			]
+			"source":"files/error.py",
+			"destination":"/opt/startup/error.py"
+		},
+		{
+			"type":"file",
+			"source":"files/partner.rpm",
+			"destination":"/tmp/Platfora.rpm"
 		},
 		{
 			"type":"shell",
 			"execute_command":"bash '{{.Path}}'",
 			"scripts":[
-				"script/{{ user `partner_name` }}.sh"
-			],
-			"only":[
-				"partner"
+				"script/fixwelcome.sh"
 			]
 		}
 	]
